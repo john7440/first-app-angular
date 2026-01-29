@@ -102,10 +102,17 @@ export class CartService {
     if (current && current.quantity > 1) this.updateQuantity(trainingId, current.quantity - 1);
   }
 
+  /**
+   * Supprime une formation du panier
+   * @param trainingId Identifiant de la formation à supprimer
+   */
   remove(trainingId: number) {
     this._items.update(items => items.filter(i => i.training.id !== trainingId));
   }
 
+  /**
+   * Vide complètement le panier et supprime les données du localStorage
+   */
   clear() {
     this._items.set([]);
     localStorage.removeItem(STORAGE_KEY);
