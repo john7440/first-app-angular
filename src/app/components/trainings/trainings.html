@@ -1,0 +1,45 @@
+<div class="container mt-3">
+  <table class="table table-striped table-hover align-middle">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NOM</th>
+        <th>DESCRIPTION</th>
+        <th>PRIX</th>
+        <th>QUANTITE</th>
+        <th>PANIER</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (training of listTrainings; track training.id) {
+        <tr>
+          <td>{{ training.id }}</td>
+          <td>{{ training.name }}</td>
+          <td>{{ training.description }}</td>
+          <td>{{ training.price }}</td>
+
+          <td style="width: 50px;">
+            <input
+              type="number"
+              class="form-control form-control-sm"
+              min="1"
+              [(ngModel)]="training.quantity"
+              name="quantity-{{ training.id }}"
+            />
+          </td>
+
+          <td style="width: 120px;">
+            <button class="btn btn-primary btn-sm" (click)="addToCart(training)">
+              Ajouter
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="6" class="text-center">Aucune formation</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
