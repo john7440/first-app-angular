@@ -1,0 +1,10 @@
+<div class="d-flex gap-2 mb-3">
+  <input
+    class="form-control"
+    type="text"
+    placeholder="Rechercher une formation..."
+    [(ngModel)]="value"
+    (input)="onInput()"
+  />
+  <button class="btn btn-outline-secondary" type="button" (click)="clear()">Effacer</button>
+</div>
