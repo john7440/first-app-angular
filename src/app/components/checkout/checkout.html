@@ -1,0 +1,95 @@
+<div class="container mt-3" style="max-width: 820px;">
+  <h4 class="mb-3 text-center">Récapitulatif de commande</h4>
+
+  <!-- Récap panier -->
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="fw-bold">Récapitulatif</div>
+        <div class="fw-bold">
+          Total : {{ cart.totalPrice() | currency:'EUR':'symbol':'1.2-2' }}
+        </div>
+      </div>
+
+      <table class="table table-sm align-middle mb-0" *ngIf="cart.items().length > 0">
+        <thead>
+          <tr>
+            <th>Formation</th>
+            <th class="text-end" style="width: 120px;">Prix</th>
+            <th class="text-end" style="width: 110px;">Quantité</th>
+            <th class="text-end" style="width: 140px;">Sous-total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (item of cart.items(); track item.training.id) {
+            <tr>
+              <td>{{ item.training.name }}</td>
+              <td class="text-end">{{ item.training.price | currency:'EUR':'symbol':'1.2-2' }}</td>
+              <td class="text-end">{{ item.quantity }}</td>
+              <td class="text-end">
+                {{ (item.training.price * item.quantity) | currency:'EUR':'symbol':'1.2-2' }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Formulaire -->
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="nom">Nom</label>
+        <input id="nom" class="form-control" formControlName="nom" />
+        @if (form.get('nom')?.touched && form.get('nom')?.invalid) {
+          <div class="text-danger small mt-1">Nom obligatoire</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="prenom">Prénom</label>
+        <input id="prenom" class="form-control" formControlName="prenom" />
+        @if (form.get('prenom')?.touched && form.get('prenom')?.invalid) {
+          <div class="text-danger small mt-1">Prénom obligatoire</div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label class="form-label" for="adresse">Adresse</label>
+        <input id="adresse" class="form-control" formControlName="adresse" />
+        @if (form.get('adresse')?.touched && form.get('adresse')?.invalid) {
+          <div class="text-danger small mt-1">Adresse obligatoire</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="telephone">Téléphone</label>
+        <input id="telephone" class="form-control" formControlName="telephone" />
+        @if (form.get('telephone')?.touched && form.get('telephone')?.invalid) {
+          <div class="text-danger small mt-1">Téléphone obligatoire</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label" for="email">Email</label>
+        <input id="email" class="form-control" formControlName="email" />
+        @if (form.get('email')?.touched && form.get('email')?.invalid) {
+          <div class="text-danger small mt-1">Email invalide</div>
+        }
+      </div>
+    </div>
+
+    <!-- Boutons -->
+    <div class="d-flex justify-content-between mt-4">
+      <button class="btn btn-danger" type="button" (click)="cancel()">
+        Annuler
+      </button>
+
+      <button class="btn btn-success" type="submit" [disabled]="cart.totalQuantity() === 0">
+        Confirmer la commande
+      </button>
+    </div>
+  </form>
+</div>
