@@ -25,6 +25,13 @@ export class TrainingsComponent {
   readonly currentCategory = signal<string>('all');
   errorMsg: string | null = null;
 
+  readonly maxPrice = signal<number | null>(null);
+
+  setMaxPrice(v: string | number) {
+    const n = Number(v);
+    this.maxPrice.set(Number.isFinite(n) && n > 0 ? n : null);
+  }
+
   readonly categories = computed(() => {
     const cats = new Set(this.allTrainings().map(t => t.category));
     return ['all', ...Array.from(cats).sort()];
@@ -33,12 +40,14 @@ export class TrainingsComponent {
   readonly listTrainings = computed(() => {
     const q = this.search.trainingQuery().toLowerCase();
     const cat = this.currentCategory();
+    const max = this.maxPrice();
     const all = this.allTrainings();
 
     return all.filter(t => {
       const matchCat = (cat === 'all') || (t.category === cat);
       const matchText = !q || (t.name + ' ' + t.description).toLowerCase().includes(q);
-      return matchCat && matchText;
+      const matchPrice = (max == null) || (t.price <= max);
+      return matchCat && matchText && matchPrice;
     });
   });
 
