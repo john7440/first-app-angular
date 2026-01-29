@@ -22,21 +22,21 @@ export class TrainingsComponent {
   private readonly search = inject(SearchService);
 
   readonly allTrainings = signal<Training[]>([]);
-  readonly selectedCategory = signal<string>('Tous');
+  readonly currentCategory = signal<string>('all');
   errorMsg: string | null = null;
 
   readonly categories = computed(() => {
     const cats = new Set(this.allTrainings().map(t => t.category));
-    return ['Tous', ...Array.from(cats).sort()];
+    return ['all', ...Array.from(cats).sort()];
   });
 
   readonly listTrainings = computed(() => {
     const q = this.search.trainingQuery().toLowerCase();
-    const cat = this.selectedCategory();
+    const cat = this.currentCategory();
     const all = this.allTrainings();
 
     return all.filter(t => {
-      const matchCat = (cat === 'Tous') || (t.category === cat);
+      const matchCat = (cat === 'all') || (t.category === cat);
       const matchText = !q || (t.name + ' ' + t.description).toLowerCase().includes(q);
       return matchCat && matchText;
     });
@@ -50,20 +50,16 @@ export class TrainingsComponent {
       error: () => {
         this.errorMsg = 'Impossible de charger la liste des formations.';
         this.allTrainings.set([]);
-      },
+      }
     });
   }
 
-  setCategory(cat: string) {
-    this.selectedCategory.set(cat);
+  filter(cat: string) {
+    this.currentCategory.set(cat);
   }
 
   addToCart(t: Training) {
     this.cart.add(t, t.quantity);
   }
 }
-
-
-
-
 

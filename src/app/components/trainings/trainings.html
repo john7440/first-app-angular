@@ -3,19 +3,19 @@
     <div class="alert alert-danger">{{ errorMsg }}</div>
   }
 
-  <div class="btn-group mb-3 ml-5" role="group" aria-label="Filtre catégories">
+  <div class="d-flex justify-content-center flex-wrap gap-3 mb-4 category-pills">
     @for (cat of categories(); track cat) {
       <button
         type="button"
-        class="btn btn-dark"
-        [class.active]="cat === selectedCategory()"
-        (click)="setCategory(cat)"
+        class="btn"
+        [class.btn-dark]="currentCategory() === cat"
+        [class.btn-outline-dark]="currentCategory() !== cat"
+        (click)="filter(cat)"
       >
-        {{ cat }}
+        {{ cat === 'all' ? 'Tous' : cat }}
       </button>
     }
   </div>
-
   <table class="table table-striped table-hover align-middle">
     <thead>
       <tr>
