@@ -1,6 +1,14 @@
 <div class="container mt-3">
   <h4 class="mb-3">Panier</h4>
 
+  <input
+  class="form-control form-control-sm mb-3"
+  placeholder="Rechercher dans le panier..."
+  [ngModel]="cartQuery()"
+  (ngModelChange)="cartQuery.set($event)"
+  name="cart-search"
+  />
+
   <table class="table table-striped align-middle" style="table-layout: fixed; width: 100%;"
          *ngIf="cart.items().length > 0; else empty">
     <thead>
@@ -14,7 +22,7 @@
     </thead>
 
     <tbody>
-      @for (item of cart.items(); track item.training.id) {
+      @for (item of filteredItems(); track item.training.id) {
         <tr>
           <td>{{ item.training.name }}</td>
 
@@ -50,6 +58,8 @@
             </button>
           </td>
         </tr>
+      } @empty {
+        <tr><td colspan="5" class="text-center">Aucun résultat</td></tr>
       }
     </tbody>
   </table>

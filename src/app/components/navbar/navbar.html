@@ -21,14 +21,18 @@
         </li>
       </ul>
 
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/cart" routerLinkActive="active">
-            Panier
-            <span class="badge bg-primary">{{ cart.totalQuantity() }}</span>
-          </a>
-        </li>
-      </ul>
-    </div>
+      <div class="d-flex ms-auto align-items-center gap-2">
+        <input
+        class="form-control form-control-sm"
+        style="width: 260px;"
+        type="search"
+        placeholder="Rechercher une formation..."
+        [ngModel]="search.trainingQuery()"
+        (ngModelChange)="search.setTrainingQuery($event)"
+        />
+        
+        <a class="nav-link" routerLink="/cart" routerLinkActive="active">
+        Panier <span class="badge bg-primary">{{ cart.totalQuantity() }}</span>
+        </a>
   </div>
-</nav>
+</div>

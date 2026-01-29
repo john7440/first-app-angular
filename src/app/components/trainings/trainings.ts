@@ -1,9 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CartService } from '../../services/cart';
+
 import { Training } from '../../model/training/training';
+import { CartService } from '../../services/cart';
 import { TrainingService } from '../../services/training.service';
+import { SearchService } from '../../services/search.service';
 
 type TrainingFromJson = Omit<Training, 'quantity'>;
 
@@ -12,24 +14,35 @@ type TrainingFromJson = Omit<Training, 'quantity'>;
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './trainings.html',
-  styleUrl: './trainings.css'
+  styleUrl: './trainings.css',
 })
-export class TrainingsComponent implements OnInit { 
+export class TrainingsComponent {
   private readonly cart = inject(CartService);
   private readonly trainingService = inject(TrainingService);
+  private readonly search = inject(SearchService);
 
-  listTrainings: Training[] = [];
+  readonly allTrainings = signal<Training[]>([]);
   errorMsg: string | null = null;
+
+  readonly listTrainings = computed(() => {
+    const q = this.search.trainingQuery().toLowerCase();
+    const all = this.allTrainings();
+
+    if (!q) return all;
+
+    return all.filter(t =>
+      (t.name + ' ' + t.description).toLowerCase().includes(q)
+    );
+  });
 
   ngOnInit() {
     this.trainingService.getTrainings().subscribe({
       next: (data: TrainingFromJson[]) => {
-        console.log('TRAININGS JSON OK', data);
-        this.listTrainings = data.map(t => ({ ...t, quantity: 1 }));
+        this.allTrainings.set(data.map(t => ({ ...t, quantity: 1 })));
       },
-      error: (err) => {
-        console.error('TRAININGS JSON ERROR', err);
-        this.errorMsg = 'Impossible de charger trainings.json';
+      error: () => {
+        this.errorMsg = 'Impossible de charger la liste des formations.';
+        this.allTrainings.set([]);
       }
     });
   }
@@ -38,8 +51,6 @@ export class TrainingsComponent implements OnInit {
     this.cart.add(t, t.quantity);
   }
 }
-
-
 
 
 

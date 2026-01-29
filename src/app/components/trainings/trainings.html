@@ -1,4 +1,8 @@
 <div class="container mt-3">
+  @if (errorMsg) {
+    <div class="alert alert-danger">{{ errorMsg }}</div>
+  }
+
   <table class="table table-striped table-hover align-middle">
     <thead>
       <tr>
@@ -6,20 +10,20 @@
         <th>NOM</th>
         <th>DESCRIPTION</th>
         <th>PRIX</th>
-        <th>QUANTITE</th>
-        <th>PANIER</th>
+        <th style="width: 110px;">QUANTITE</th>
+        <th style="width: 120px;">PANIER</th>
       </tr>
     </thead>
 
     <tbody>
-      @for (training of listTrainings; track training.id) {
+      @for (training of listTrainings(); track training.id) {
         <tr>
           <td>{{ training.id }}</td>
           <td>{{ training.name }}</td>
           <td>{{ training.description }}</td>
           <td>{{ training.price }}</td>
 
-          <td style="width: 50px;">
+          <td>
             <input
               type="number"
               class="form-control form-control-sm"
@@ -29,7 +33,7 @@
             />
           </td>
 
-          <td style="width: 120px;">
+          <td>
             <button class="btn btn-primary btn-sm" (click)="addToCart(training)">
               Ajouter
             </button>

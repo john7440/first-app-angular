@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component,computed, inject, signal} from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { CartService } from '../../services/cart';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,18 @@ import { Router } from '@angular/router';
 export class CartComponent {
     readonly cart = inject(CartService);
     private readonly router = inject(Router);
+    cartQuery = signal('');
+
+    readonly filteredItems = computed(() => {
+    const q = this.cartQuery().trim().toLowerCase();
+    const items = this.cart.items();
+
+    if (!q) return items;
+
+    return items.filter(i =>
+      (i.training.name + ' ' + i.training.description).toLowerCase().includes(q)
+    );
+  });
 
     remove(id:number) {this.cart.remove(id); }
 
@@ -30,3 +42,4 @@ export class CartComponent {
         this.router.navigate(['/checkout']);
     }
 }
+
