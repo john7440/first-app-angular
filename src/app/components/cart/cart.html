@@ -1,0 +1,70 @@
+<div class="container mt-3">
+  <h4 class="mb-3">Panier</h4>
+
+  <table class="table table-striped align-middle" style="table-layout: fixed; width: 100%;"
+         *ngIf="cart.items().length > 0; else empty">
+    <thead>
+      <tr>
+        <th>Formation</th>
+        <th style="width: 140px;" class="text-end">Prix</th>
+        <th style="width: 200px;">Quantité</th>
+        <th style="width: 160px;" class="text-end">Sous-total</th>
+        <th style="width: 110px;"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (item of cart.items(); track item.training.id) {
+        <tr>
+          <td>{{ item.training.name }}</td>
+
+          <td class="text-end">
+            {{ item.training.price | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+          </td>
+
+          <td>
+            <div class="input-group input-group-sm" style="width: 160px; flex-wrap: nowrap;">
+              <button class="btn btn-outline-secondary" type="button"
+                      (click)="decrease(item.training.id)"
+                      [disabled]="item.quantity <= 1">-</button>
+
+              <input class="form-control text-center no-spinner" 
+                     style="max-width: 35px;"
+                     type="number" min="1"
+                     [ngModel]="item.quantity"
+                     (ngModelChange)="update(item.training.id, $event)"
+                     name="cart-qty-{{ item.training.id }}" />
+
+              <button class="btn btn-outline-secondary" type="button"
+                      (click)="increase(item.training.id)">+</button>
+            </div>
+          </td>
+
+          <td class="text-end">
+            {{ (item.training.price * item.quantity) | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+          </td>
+
+          <td class="text-end">
+            <button class="btn btn-danger btn-sm" (click)="remove(item.training.id)">
+              Retirer
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <ng-template #empty>
+    <div class="alert alert-info">Panier vide</div>
+  </ng-template>
+
+  <div class="d-flex justify-content-end align-items-center gap-3 mt-3"
+       *ngIf="cart.items().length > 0">
+    <div class="fw-bold">
+      Total : {{ cart.totalPrice() | currency:'EUR':'symbol':'1.2-2':'fr-FR' }}
+    </div>
+    <button class="btn btn-success" (click)="checkout()">
+      Commander
+    </button>
+  </div>
+</div>
