@@ -82,14 +82,37 @@
     </div>
 
     <!-- Boutons -->
-    <div class="d-flex justify-content-between mt-4">
+    <div class="d-flex justify-content-end mt-4 py-2 gap-2">
       <button class="btn btn-danger" type="button" (click)="cancel()">
         Annuler
       </button>
 
-      <button class="btn btn-success" type="submit" [disabled]="cart.totalQuantity() === 0">
+      <button class="btn btn-success" type="submit" [disabled]="form.invalid || cart.items().length === 0">
         Confirmer la commande
       </button>
     </div>
   </form>
 </div>
+
+@if (showConfirm()) {
+  <div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Commande validée</h5>
+          <button type="button" class="btn-close" (click)="closeAndGoTrainings()"></button>
+        </div>
+
+        <div class="modal-body">
+          Merci, votre commande a bien été enregistrée!
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" (click)="closeAndGoTrainings()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop fade show"></div>
+}

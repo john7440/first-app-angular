@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,6 +23,9 @@ export class CheckoutComponent {
 
     // navigation
     private readonly router = inject(Router);
+
+    //modale confirmation
+    showConfirm = signal(false);
 
     /**
      * Formulaire de validation de commande avec les champs requis :
@@ -50,11 +53,18 @@ export class CheckoutComponent {
       return;
     }
 
+    if (this.cart.items().length === 0) return;
+
     console.log('Commande', {customer: this.form.value, items: this.cart.items()});
 
     this.cart.clear();
-    this.router.navigate(['/trainings'])
+    this.showConfirm.set(true);
     }
+
+  closeAndGoTrainings() {
+    this.showConfirm.set(false);
+    this.router.navigate(['/trainings']);
+   }
 
     /**
      * Annule la validation et retourne à la page du panier

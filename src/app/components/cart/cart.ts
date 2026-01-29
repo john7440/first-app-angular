@@ -37,6 +37,7 @@ export class CartComponent {
       (i.training.name + ' ' + i.training.description).toLowerCase().includes(q)
     );
   });
+  
 
   /**
      * Supprime un article du panier

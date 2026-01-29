@@ -79,6 +79,8 @@
     <div class="fw-bold">
       Total : {{ cart.totalPrice() | currency:'EUR':'symbol':'1.2-2' }}
     </div>
-    <button class="btn btn-success" (click)="checkout()">Commander</button>
+    <button class="btn btn-danger" (click)="clear()" [disabled]="cart.items().length === 0">Vider Panier</button>
+    <button class="btn btn-success" (click)="checkout()" [disabled]="cart.items().length === 0">Commander</button>
   </div>
+  
 </div>
