@@ -22,17 +22,24 @@ export class TrainingsComponent {
   private readonly search = inject(SearchService);
 
   readonly allTrainings = signal<Training[]>([]);
+  readonly selectedCategory = signal<string>('Tous');
   errorMsg: string | null = null;
+
+  readonly categories = computed(() => {
+    const cats = new Set(this.allTrainings().map(t => t.category));
+    return ['Tous', ...Array.from(cats).sort()];
+  });
 
   readonly listTrainings = computed(() => {
     const q = this.search.trainingQuery().toLowerCase();
+    const cat = this.selectedCategory();
     const all = this.allTrainings();
 
-    if (!q) return all;
-
-    return all.filter(t =>
-      (t.name + ' ' + t.description).toLowerCase().includes(q)
-    );
+    return all.filter(t => {
+      const matchCat = (cat === 'Tous') || (t.category === cat);
+      const matchText = !q || (t.name + ' ' + t.description).toLowerCase().includes(q);
+      return matchCat && matchText;
+    });
   });
 
   ngOnInit() {
@@ -43,8 +50,12 @@ export class TrainingsComponent {
       error: () => {
         this.errorMsg = 'Impossible de charger la liste des formations.';
         this.allTrainings.set([]);
-      }
+      },
     });
+  }
+
+  setCategory(cat: string) {
+    this.selectedCategory.set(cat);
   }
 
   addToCart(t: Training) {
