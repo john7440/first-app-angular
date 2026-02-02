@@ -1,1 +1,103 @@
-<p>login works!</p>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div class="card-body p-5">
+          <h2 class="text-center mb-4">
+            <i class="bi bi-person-circle fs-1 text-dark"></i>
+            <br>
+            Connexion
+          </h2>
+
+          @if (errorMsg) {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>
+              {{ errorMsg }}
+              <button type="button" class="btn-close" (click)="errorMsg = ''"></button>
+            </div>
+          }
+
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!--email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-envelope"></i>
+                </span>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  formControlName="email"
+                  placeholder="votre@email.com"
+                  [class.is-invalid]="email?.invalid && email?.touched"
+                />
+              </div>
+              @if (email?.invalid && email?.touched) {
+                <div class="text-danger small mt-1">
+                  @if (email?.errors?.['required']) {
+                    <span>L'email est requis</span>
+                  }
+                  @if (email?.errors?.['email']) {
+                    <span>L'email n'est pas valide</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <!--Pass-->
+            <div class="mb-3">
+              <label for="password" class="form-label">Mot de passe</label>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  formControlName="password"
+                  placeholder="Louvre"
+                  [class.is-invalid]="password?.invalid && password?.touched"
+                />
+              </div>
+              @if (password?.invalid && password?.touched) {
+                <div class="text-danger small mt-1">
+                  @if (password?.errors?.['required']) {
+                    <span>Mot de passe requis!</span>
+                  }
+                  @if (password?.errors?.['minlength']) {
+                    <span>Le mot de passe doit contenir au moins 4 caractères</span>
+                  }
+                </div>
+              }
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary w-100 py-2"
+              [disabled]="isLoading"
+            >
+              @if (isLoading) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Connexion en cours...
+              } @else {
+                <i class="bi bi-box-arrow-in-right me-2"></i>
+                Se connecter
+              }
+            </button>
+          </form>
+
+          <hr class="my-4">
+
+          <div class="text-center text-muted small">
+            <p class="mb-0">Comptes de test :</p>
+            <p class="mb-0">admin@example.com / admin123</p>
+            <p class="mb-0">user@example.com / user123</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
