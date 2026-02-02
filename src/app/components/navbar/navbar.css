@@ -1,0 +1,5 @@
+
+.nav-link:hover{
+    color: blue;
+    transform: scale(1.1); 
+}
