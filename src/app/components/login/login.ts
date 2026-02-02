@@ -27,5 +27,12 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
   
+  get password() {
+    return this.loginForm.get('password');
+  }
 }
