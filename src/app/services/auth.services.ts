@@ -50,5 +50,13 @@ export class AuthService {
     delete (userToStore as any).password;
     localStorage.setItem('currentUser', JSON.stringify(userToStore))
   }
+
+  getCurrentUser(): User | null {
+     return this.currentUser();
+  }
+
+  isAuthenticated(): boolean {
+    return this.currentUser() !== null;
+  }
   
 }
