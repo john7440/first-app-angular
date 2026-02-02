@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../model/auth.model';
 import { Router } from '@angular/router';
 
@@ -23,6 +23,26 @@ export class AuthService {
 
   isAdmin(user: User): boolean{
     return user.role === 'admin';
+  }
+
+  login(email: string, password: string): Observable<User>{
+    return this.getUsers().pipe(
+        map(users => {
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if(!user){
+                throw new Error('Email ou mdp incorrect!');
+            }
+
+            this.setCurrentUser(user); //TODO 
+
+            return user;
+        }),
+        catchError((err) => {
+            console.error('Erreor de connexion', err);
+            return throwError(()=>err);
+        })
+    )
   }
   
 }
