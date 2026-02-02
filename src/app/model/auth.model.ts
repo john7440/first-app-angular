@@ -3,6 +3,8 @@ export class User{
     email: string;
     password : string;
     role: string ;
+    firstName?: string;
+    lastName?: string;
 
     constructor(id: number, email: string, password: string, role: string){
         this.id = id;
