@@ -35,4 +35,30 @@ export class LoginComponent {
   get password() {
     return this.loginForm.get('password');
   }
+
+  onSubmit(): void{
+    if (this.loginForm.invalid){
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMsg = '';
+
+    const { email, password} = this.loginForm.value;
+
+    this.authService.login(email,password).subscribe({
+      next: (user) => {
+        console.log('Connexion résussie', user);
+        this.router.navigate(['/trainings']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMsg = err.message || 'Mail ou mdp incorrect';
+      },
+      complete: () =>{
+        this.isLoading = false;
+      }
+    });
+  }
 }
