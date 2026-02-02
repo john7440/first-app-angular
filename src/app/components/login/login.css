@@ -1,0 +1,26 @@
+.card {
+  border: none;
+  border-radius: 1rem;
+}
+
+.input-group-text {
+  background-color: #f8f9fa;
+  border-right: none;
+}
+
+.form-control {
+  border-left: none;
+}
+
+.form-control:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+}
+
+.input-group:focus-within .input-group-text {
+  border-color: #86b7fe;
+}
+
+.input-group:focus-within .form-control {
+  border-color: #86b7fe;
+}
