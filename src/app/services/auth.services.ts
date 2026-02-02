@@ -12,6 +12,10 @@ export class AuthService {
 
   currentUser = signal<User | null>(null);
 
+  constructor(){
+    this.loadUserFromStorage();
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.url).pipe(
       catchError((err) => {
@@ -64,6 +68,13 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.currentUser() !== null;
+  }
+
+  private loadUserFromStorage(): void {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser){
+        this.currentUser.set(JSON.parse(storedUser));
+    }
   }
   
 }
