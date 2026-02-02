@@ -44,6 +44,13 @@ export class AuthService {
     )
   }
 
+  logout(): void {
+    this.currentUser.set(null);
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/trainings'])
+  }
+
+  //enregistrement dans le local storage 
   private setCurrentUser(user: User): void{
     this.currentUser.set(user);
     const userToStore = {...user};
