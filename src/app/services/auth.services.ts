@@ -35,7 +35,6 @@ export class AuthService {
             }
 
             this.setCurrentUser(user); //TODO 
-
             return user;
         }),
         catchError((err) => {
@@ -43,6 +42,13 @@ export class AuthService {
             return throwError(()=>err);
         })
     )
+  }
+
+  private setCurrentUser(user: User): void{
+    this.currentUser.set(user);
+    const userToStore = {...user};
+    delete (userToStore as any).password;
+    localStorage.setItem('currentUser', JSON.stringify(userToStore))
   }
   
 }
