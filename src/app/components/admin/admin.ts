@@ -54,4 +54,12 @@ export class AdminComponent {
     });
   }
 
+  //--------------------------------modals-----------------------------------------
+  openAddModal(){
+    this.editMode.set(false);
+    this.editingId.set(null);
+    this.trainingForm.reset();
+    this.showModal.set(true);
+  }
+
 }
