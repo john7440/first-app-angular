@@ -2,7 +2,6 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrainingService } from '../../services/training.service';
 import { Training } from '../../model/training/training';
-import { validate } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-admin',
@@ -74,6 +73,13 @@ export class AdminComponent {
     });
 
     this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+    this.trainingForm.reset();
+    this.editMode.set(false);
+    this.editingId.set(null);
   }
 
 }
