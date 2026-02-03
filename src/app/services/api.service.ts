@@ -43,6 +43,12 @@ export class ApiService{
         );
     }
 
+    delete<T>(endpoint: string, id: number): Observable<T> {
+        return this.http.delete<T>(`${this.apiUrl}/${endpoint}/${id}`).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse){
         let errorMsg = 'Une erreur est survenue';
 
