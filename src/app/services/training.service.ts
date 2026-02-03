@@ -31,6 +31,18 @@ export class TrainingService {
     );
   }
 
+  updateTraining(id:number, training: Partial<TrainingFromJson>): Observable<Training>{
+    return this.api.update<TrainingFromJson>(this.endpoint, id, training).pipe(
+      map(this.mapToTraining)
+    );
+  }
+
+  deleteTraining(id: number): Observable<void>{
+    return this.api.delete<TrainingFromJson>(this.endpoint, id).pipe(
+      map(() => void 0)
+    );
+  }
+
   private mapToTraining(trainingFromJson: TrainingFromJson): Training {
     return{
       ...trainingFromJson,
