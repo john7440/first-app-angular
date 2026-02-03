@@ -25,6 +25,12 @@ export class ApiService{
         );
     }
 
+    getById<T>(endpoint: string, id: number): Observable<T> {
+        return this.http.get<T>(`${this.apiUrl}/${endpoint}/${id}`).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse){
         let errorMsg = 'Une erreur est survenue';
 
