@@ -31,6 +31,18 @@ export class ApiService{
         );
     }
 
+    create<T>(endpoint: string, data: Partial<T>): Observable<T>{
+        return this.http.post<T>(`${this.apiUrl}/${endpoint}`, data).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    update<T>(endpoint: string, id: number, data: Partial<T>): Observable<T> {
+        return this.http.put<T>(`${this.apiUrl}/${endpoint}/${id}`, data).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse){
         let errorMsg = 'Une erreur est survenue';
 
