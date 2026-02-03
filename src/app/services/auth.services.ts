@@ -3,14 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../model/auth.model';
 import { Router } from '@angular/router';
+import { CryptoService } from './crypto.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
+  private readonly crypto = inject(CryptoService);
   private readonly url = '/assets/login.json';
 
   currentUser = signal<User | null>(null);
+
+  //clé localstorage
+  private readonly STORAGE_KEY = 'auth_user_data';
 
   constructor(){
     this.loadUserFromStorage();
@@ -38,7 +43,7 @@ export class AuthService {
                 throw new Error('Email ou mdp incorrect!');
             }
 
-            this.setCurrentUser(user); //TODO 
+            this.setCurrentUser(user); 
             return user;
         }),
         catchError((err) => {
@@ -56,10 +61,12 @@ export class AuthService {
 
   //enregistrement dans le local storage 
   private setCurrentUser(user: User): void{
-    this.currentUser.set(user);
     const userToStore = {...user};
-    delete (userToStore as any).password;
-    localStorage.setItem('currentUser', JSON.stringify(userToStore))
+    
+    const encryptedData = this.crypto.encrypt(userToStore);
+    localStorage.setItem(this.STORAGE_KEY, encryptedData)
+
+    this.currentUser.set(userToStore);
   }
 
   getCurrentUser(): User | null {
