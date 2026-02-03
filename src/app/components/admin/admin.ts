@@ -164,4 +164,10 @@ private clearMessages(){
   }, 3000);
 }
 
+///---------------------getters pour formulairze------------------------------------
+get name() {return this.trainingForm.get('name');}
+get description() {return this.trainingForm.get('description');}
+get price() {return this.trainingForm.get('price');}
+get category() {return this.trainingForm.get('category');}
+
 }
