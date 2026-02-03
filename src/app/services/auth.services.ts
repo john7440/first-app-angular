@@ -4,6 +4,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../model/auth.model';
 import { Router } from '@angular/router';
 import { CryptoService } from './crypto.service';
+import { enc } from 'crypto-js';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -78,9 +79,20 @@ export class AuthService {
   }
 
   private loadUserFromStorage(): void {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser){
-        this.currentUser.set(JSON.parse(storedUser));
+    const encryptedData = localStorage.getItem(this.STORAGE_KEY);
+    if (encryptedData){
+       try{
+        const decryptedData = this.crypto.decrypt(encryptedData);
+
+        if (decryptedData) {
+          this.currentUser.set(decryptedData);
+        } else{
+          localStorage.removeItem(decryptedData);
+        }
+       }catch (error){
+        console.error("Erreur dechiffrement: ", error);
+        localStorage.removeItem(this.STORAGE_KEY);
+       }
     }
   }
   
