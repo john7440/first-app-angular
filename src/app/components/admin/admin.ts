@@ -119,7 +119,22 @@ export class AdminComponent {
 }
 
 private updateTraining(id: number, data: TrainingFormData){
-  //TODO
+  this.isLoading.set(true);
+
+  this.trainingService.updateTraining(id, data).subscribe({
+    next: () => {
+      this.successMsg.set("Formation mise a jour!");
+      this.loadTrainings();
+      this.closeModal();
+      this.clearMessages();
+    },
+    error: (err) => {
+      this.errorMsg.set('Erreur lors de la mise ajour!')
+      this.isLoading.set(false);
+      console.error(err);
+    }
+  });
+
 }
 
 private clearMessages(){
