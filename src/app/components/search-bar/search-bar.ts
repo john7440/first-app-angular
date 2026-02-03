@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './search-bar.css',
 })
 export class SearchBarComponent {
-  //valeur intiale de la recherche
   value = '';
 
   //evénement émis à chaque modification de la recherche
@@ -28,7 +27,7 @@ export class SearchBarComponent {
   }
 
   /**
-   * Réinitialise le champ de recherche
+   * Réinitialisation
    */
   clear() {
     this.value = '';

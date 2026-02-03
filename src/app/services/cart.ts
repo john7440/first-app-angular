@@ -10,7 +10,7 @@ export interface CartItem {
 }
 
 ///clé utilisée pour stocker le panier dans le localstorage 
-const STORAGE_KEY = 'cart-items-v1';
+const STORAGE_KEY = 'cart-items-store';
 
 /**
  * Service de gestion du panier d'achat

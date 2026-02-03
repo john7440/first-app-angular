@@ -35,6 +35,8 @@ export class TrainingsComponent {
   readonly currentCategory = signal<string>('all');
   errorMsg: string | null = null;
 
+  isLoading = signal<boolean>(false);
+
   // signal du prix maximum pour le filtrage
   readonly maxPrice = signal<number | null>(null);
 
@@ -82,13 +84,23 @@ export class TrainingsComponent {
    *puis on ajoute une propriété quantity par défaut à 1 pour chaque formation
    */
   ngOnInit() {
+    this.loadTrainings();
+  }
+
+  loadTrainings(){
+    this.isLoading.set(true);
+    this.errorMsg = null;
+
     this.trainingService.getTrainings().subscribe({
-      next: (data: TrainingFromJson[]) => {
-        this.allTrainings.set(data.map(t => ({ ...t, quantity: 1 })));
+      next: (data: Training[]) => {
+        this.allTrainings.set(data);
+        this.isLoading.set(false);
       },
-      error: () => {
-        this.errorMsg = 'Impossible de charger la liste des formations.';
+      error: (error) => {
+        console.error('Problèmes de chargement des formations', error);
+        this.errorMsg = 'Impossible de charger la liste des formations';
         this.allTrainings.set([]);
+        this.isLoading.set(false);
       }
     });
   }

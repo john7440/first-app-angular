@@ -38,7 +38,6 @@ export class CartComponent {
     );
   });
   
-
   /**
      * Supprime un article du panier
      * @param id Id de la formation à supprimer

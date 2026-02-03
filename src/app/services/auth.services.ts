@@ -1,17 +1,15 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { User } from '../model/auth.model';
 import { Router } from '@angular/router';
 import { CryptoService } from './crypto.service';
-import { enc } from 'crypto-js';
+import { ApiService } from './api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly http = inject(HttpClient);
+  private readonly api = inject(ApiService);
   private readonly router = inject(Router);
   private readonly crypto = inject(CryptoService);
-  private readonly url = '/assets/login.json';
 
   currentUser = signal<User | null>(null);
 
@@ -23,12 +21,7 @@ export class AuthService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url).pipe(
-      catchError((err) => {
-        console.error('Erreur chargement login.json', err);
-        return throwError(() => err);
-      })
-    );
+    return this.api.getAll<User>('users');
   }
 
   isAdmin(user: User): boolean{
@@ -36,14 +29,12 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<User>{
-    return this.getUsers().pipe(
+    return this.api.getWithParams<User>('users', { email, password}).pipe(
         map(users => {
-            const user = users.find(u => u.email === email && u.password === password);
-
-            if(!user){
+            if(users.length === 0){
                 throw new Error('Email ou mdp incorrect!');
             }
-
+            const user = users[0];
             this.setCurrentUser(user); 
             return user;
         }),
