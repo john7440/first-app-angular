@@ -18,6 +18,12 @@ export class ApiService{
         );
     }
 
+    getWithParams<T>(endpoint: string, params: any): Observable<T[]> {
+        return this.http.get<T[]>(`${this.apiUrl}/${endpoint}`, { params }).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     private handleError(error: HttpErrorResponse){
         let errorMsg = 'Une erreur est survenue';
 
