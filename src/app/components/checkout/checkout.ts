@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart';
+import { AuthService } from '../../services/auth.services';
 
 /**
  * Composant de validation de commande
@@ -20,12 +21,14 @@ export class CheckoutComponent {
     //construction de formulaires réactifs
     private readonly fb = inject(FormBuilder);
     readonly cart = inject(CartService);
+    readonly auth = inject(AuthService);
 
     // navigation
     private readonly router = inject(Router);
 
     //modale confirmation
     showConfirm = signal(false);
+    notAuthenticated = signal(false);
 
     /**
      * Formulaire de validation de commande avec les champs requis :
@@ -48,7 +51,8 @@ export class CheckoutComponent {
      * - Redirige vers la liste des formations
      */
   submit() {
-    if (this.form.invalid) {
+    if (this.auth.isAuthenticated()){
+      if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
@@ -59,7 +63,10 @@ export class CheckoutComponent {
 
     this.cart.clear();
     this.showConfirm.set(true);
+    } else {
+      this.notAuthenticated.set(true);
     }
+  }
 
   closeAndGoTrainings() {
     this.showConfirm.set(false);
