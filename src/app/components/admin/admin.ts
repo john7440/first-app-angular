@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TrainingService } from '../../services/training.service';
 import { Training } from '../../model/training/training';
 
+type TrainingFormData = Omit<Training, 'id' | 'quantity'>;
+
 @Component({
   selector: 'app-admin',
   imports: [],
@@ -81,5 +83,50 @@ export class AdminComponent {
     this.editMode.set(false);
     this.editingId.set(null);
   }
+
+  //----------------------CRUD----------------------------
+  onSubmit() {
+    if (this.trainingForm.invalid){
+      this.trainingForm.markAllAsTouched();
+      return;   
+  }
+
+  const formData : TrainingFormData = this.trainingForm.value; 
+
+  if (this.editMode()){
+    this.updateTraining(this.editingId()!, formData);
+  }else{
+    this.createTraining(formData);
+  }
+}
+
+  private createTraining(data: TrainingFormData){
+    this.isLoading.set(true);
+
+    this.trainingService.createTraining(data).subscribe({
+      next: () => {
+        this.successMsg.set('Formations créee avec succès');
+        this.loadTrainings();
+        this.closeModal();
+        this.clearMessages();
+      },
+      error: (err) => {
+        this.errorMsg.set('Erreur! la creation à échouée!');
+        this.isLoading.set(false);
+        console.error(err);
+      }
+    })
+}
+
+private updateTraining(id: number, data: TrainingFormData){
+  //TODO
+}
+
+private clearMessages(){
+  setTimeout(() => {
+    this.successMsg.set(null);
+    this.errorMsg.set(null);
+  }, 3000);
+}
 
 }
