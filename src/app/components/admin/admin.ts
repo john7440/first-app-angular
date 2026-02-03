@@ -62,4 +62,18 @@ export class AdminComponent {
     this.showModal.set(true);
   }
 
+  openEditModal(training: Training){
+    this.editMode.set(true);
+    this.editingId.set(training.id);
+
+    this.trainingForm.patchValue({
+      name: training.name,
+      description: training.description,
+      price: training.price,
+      category: training.category
+    });
+
+    this.showModal.set(true);
+  }
+
 }
