@@ -137,6 +137,26 @@ private updateTraining(id: number, data: TrainingFormData){
 
 }
 
+deleteTraining(training: Training){
+  if (!confirm(`Etes-vous sur de vouloir supprimer: "${training.name}" ?`)) {
+      return;
+    }
+    this.isLoading.set(true);
+
+    this.trainingService.deleteTraining(training.id).subscribe({
+      next: () => {
+        this.successMsg.set('Formation correctement supprimée')
+        this.loadTrainings();
+        this.clearMessages();
+      },
+      error: (err) => {
+        this.errorMsg.set('Problème rencontré lors de la suppression!');
+        this.isLoading.set(false);
+        console.error(err);
+      }
+    });
+}
+
 private clearMessages(){
   setTimeout(() => {
     this.successMsg.set(null);
