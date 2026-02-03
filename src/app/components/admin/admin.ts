@@ -33,7 +33,25 @@ export class AdminComponent {
       price: [0,[Validators.required, Validators.min(0)]],
       category: ['', Validators.required]
     });
+
+    this.loadTrainings();
   }
-  
+
+  loadTrainings(){
+    this.isLoading.set(true);
+    this.errorMsg.set(null);
+
+    this.trainingService.getTrainings().subscribe({
+      next: (data) => {
+        this.trainings.set(data);
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        this.errorMsg.set('Erreur chargement des formations');
+        this.isLoading.set(false);
+        console.error(err);
+      }
+    });
+  }
 
 }
