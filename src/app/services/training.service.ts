@@ -19,6 +19,18 @@ export class TrainingService {
     );
   }
 
+  getTrainingById(id: number): Observable<Training>{
+    return this.api.getById<TrainingFromJson>(this.endpoint, id).pipe(
+      map(this.mapToTraining)
+    );
+  }
+
+  createTraining(training: Omit<TrainingFromJson,'id'>): Observable<Training>{
+    return this.api.create<TrainingFromJson>(this.endpoint, training).pipe(
+      map(this.mapToTraining)
+    );
+  }
+
   private mapToTraining(trainingFromJson: TrainingFromJson): Training {
     return{
       ...trainingFromJson,
