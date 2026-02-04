@@ -1,1 +1,216 @@
-<p>admin works!</p>
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-gear me-2"></i>Administration des Formations</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">
+      <i class="bi bi-plus-circle me-2"></i>
+      Ajouter une formation
+    </button>
+  </div>
+
+  <!-- messages -->
+  @if (successMsg()) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      {{ successMsg() }}
+      <button type="button" class="btn-close" (click)="successMsg.set(null)"></button>
+    </div>
+  }
+
+  @if (errorMsg()) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMsg() }}
+      <button type="button" class="btn-close" (click)="errorMsg.set(null)"></button>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+  }
+
+  <!-- formations-->
+  @if (!isLoading()) {
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Catégorie</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (training of trainings(); track training.id) {
+                <tr>
+                  <td>{{ training.id }}</td>
+                  <td><strong>{{ training.name }}</strong></td>
+                  <td>{{ training.description }}</td>
+                  <td>{{ training.price }}€</td>
+                  <td>
+                    <span class="badge bg-secondary">{{ training.category }}</span>
+                  </td>
+                  <td class="text-end">
+                    <button 
+                      class="btn btn-sm btn-outline-primary me-2" 
+                      (click)="openEditModal(training)"
+                      title="Modifier">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button 
+                      class="btn btn-sm btn-outline-danger" 
+                      (click)="deleteTraining(training)"
+                      title="Supprimer">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="text-center text-muted py-4">
+                    Aucune formation disponible
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!--formulaire -->
+@if (showModal()) {
+  <div class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            @if (editMode()) {
+              <i class="bi bi-pencil me-2"></i>Modifier la formation
+            } @else {
+              <i class="bi bi-plus-circle me-2"></i>Ajouter une formation
+            }
+          </h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        
+        <form [formGroup]="trainingForm" (ngSubmit)="onSubmit()">
+          <div class="modal-body">
+            <!-- nom -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Nom de la formation *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                formControlName="name"
+                [class.is-invalid]="name?.invalid && name?.touched"
+              />
+              @if (name?.invalid && name?.touched) {
+                <div class="invalid-feedback">
+                  @if (name?.errors?.['required']) {
+                    Le nom est requis
+                  }
+                  @if (name?.errors?.['minlength']) {
+                    3 caracteres min
+                  }
+                </div>
+              }
+            </div>
+
+            <!--description -->
+            <div class="mb-3">
+              <label for="description" class="form-label">Description *</label>
+              <textarea
+                class="form-control"
+                id="description"
+                rows="3"
+                formControlName="description"
+                [class.is-invalid]="description?.invalid && description?.touched"
+              ></textarea>
+              @if (description?.invalid && description?.touched) {
+                <div class="invalid-feedback">
+                  @if (description?.errors?.['required']) {
+                    Description requise
+                  }
+                  @if (description?.errors?.['minlength']) {
+                    10 caracteres min
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- prix et cat -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="price" class="form-label">Prix (€) *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  formControlName="price"
+                  [class.is-invalid]="price?.invalid && price?.touched"
+                />
+                @if (price?.invalid && price?.touched) {
+                  <div class="invalid-feedback">
+                    @if (price?.errors?.['required']) {
+                      Le prix est requis
+                    }
+                    @if (price?.errors?.['min']) {
+                      Le prix doit etre positif
+                    }
+                  </div>
+                }
+              </div>
+
+              <div class="col-md-6">
+                <label for="category" class="form-label">Catégorie *</label>
+                <select
+                  class="form-select"
+                  id="category"
+                  formControlName="category"
+                  [class.is-invalid]="category?.invalid && category?.touched"
+                >
+                  <option value="">-- Choisir --</option>
+                  <option value="Frontend">Frontend</option>
+                  <option value="Backend">Backend</option>
+                  <option value="DevOps">DevOps</option>
+                  <option value="Database">Database</option>
+                  <option value="Mobile">Mobile</option>
+                </select>
+                @if (category?.invalid && category?.touched) {
+                  <div class="invalid-feedback">
+                    La catégorie est requise
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="trainingForm.invalid">
+              @if (editMode()) {
+                <i class="bi bi-save me-2"></i>Mettre à jour
+              } @else {
+                <i class="bi bi-plus-circle me-2"></i>Créer
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}

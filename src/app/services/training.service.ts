@@ -25,7 +25,7 @@ export class TrainingService {
     );
   }
 
-  createTraining(training: Omit<TrainingFromJson,'id'>): Observable<Training>{
+  createTraining(training: TrainingFromJson): Observable<Training>{
     return this.api.create<TrainingFromJson>(this.endpoint, training).pipe(
       map(this.mapToTraining)
     );

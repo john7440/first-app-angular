@@ -1,34 +1,58 @@
 {
   "trainings": [
-  { "id": 1, "name": "Java", "description": "Formation Java SE 8 sur 5 jours", "price": 1500, "category": "Backend" },
-  { "id": 2, "name": "DotNet", "description": "Formation .NET sur 10 jours", "price": 500, "category": "Backend" },
-  { "id": 3, "name": "Angular", "description": "Formation Angular sur 5 jours", "price": 900, "category": "Frontend" },
-  { "id": 4, "name": "TypeScript", "description": "TypeScript de A à Z (2 jours)", "price": 450, "category": "Frontend" },
-  { "id": 5, "name": "HTML/CSS", "description": "Responsive design (2 jours)", "price": 300, "category": "Frontend" },
-  { "id": 6, "name": "Spring Boot", "description": "API REST avec Spring Boot (5 jours)", "price": 1200, "category": "Backend" },
-  { "id": 7, "name": "Hibernate/JPA", "description": "Persistance avec JPA/Hibernate (3 jours)", "price": 750, "category": "Backend" },
-  { "id": 8, "name": "SQL", "description": "SQL avancé et optimisation (3 jours)", "price": 600, "category": "Data" },
-  { "id": 9, "name": "Docker", "description": "Docker pour devs (3 jours)", "price": 700, "category": "DevOps" },
-  { "id": 10, "name": "Kubernetes", "description": "Bases Kubernetes (4 jours)", "price": 1100, "category": "DevOps" },
-  { "id": 11, "name": "Git", "description": "Git & GitHub workflow (2 jours)", "price": 350, "category": "Tools" },
-  { "id": 12, "name": "Tests", "description": "Tests unitaires Angular/Jest (2 jours)", "price": 500, "category": "Quality" }
-],
+    {
+      "id": 1,
+      "name": "Formation Angular",
+      "description": "Apprendre Angular de A à Z",
+      "price": 500,
+      "category": "Frontend"
+    },
+    {
+      "id": 2,
+      "name": "Formation React",
+      "description": "Maîtriser React et ses hooks",
+      "price": 450,
+      "category": "Frontend"
+    },
+    {
+      "id": 3,
+      "name": "Formation Node.js",
+      "description": "Backend avec Node.js et Express",
+      "price": 657,
+      "category": "Backend"
+    },
+    {
+      "name": "Formation TypeScript",
+      "description": "TypeScript avancé",
+      "price": 426,
+      "category": "Frontend",
+      "id": 4
+    },
+    {
+      "id": 5,
+      "name": "Formation Docker",
+      "description": "Conteneurisation avec Docker",
+      "price": 550,
+      "category": "DevOps"
+    }
+  ],
   "users": [
-  {
-    "id": 1,
-    "email": "admin@example.com",
-    "password": "admin123",
-    "role": "admin",
-    "firstName": "Jonathan",
-    "lastName": "Maier"
-  },
-  {
-    "id": 2,
-    "email": "user@example.com",
-    "password": "user123",
-    "role": "user",
-    "firstName": "Test",
-    "lastName": "Machin"
-  }
-]
+    {
+      "id": 1,
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "admin",
+      "firstName": "Admin",
+      "lastName": "User"
+    },
+    {
+      "id": 2,
+      "email": "user@example.com",
+      "password": "user123",
+      "role": "user",
+      "firstName": "John",
+      "lastName": "Doe"
+    }
+  ],
+  "orders": []
 }

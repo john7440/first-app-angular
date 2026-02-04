@@ -1,13 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TrainingService } from '../../services/training.service';
 import { Training } from '../../model/training/training';
+import { CommonModule } from '@angular/common';
 
-type TrainingFormData = Omit<Training, 'id' | 'quantity'>;
+type TrainingFormData = Omit<Training,'quantity'>;
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
@@ -59,11 +60,18 @@ export class AdminComponent {
   openAddModal(){
     this.editMode.set(false);
     this.editingId.set(null);
-    this.trainingForm.reset();
+    this.trainingForm.reset({
+      name: '',
+      description: '',
+      price: 0,
+      category: ''
+    });
     this.showModal.set(true);
   }
 
   openEditModal(training: Training){
+    console.log('✏️ Édition - Training complet:', training);
+    console.log('✏️ Type de l\'ID:', typeof training.id, 'Valeur:', training.id);
     this.editMode.set(true);
     this.editingId.set(training.id);
 
@@ -91,7 +99,7 @@ export class AdminComponent {
       return;   
   }
 
-  const formData : TrainingFormData = this.trainingForm.value; 
+  const formData = this.trainingForm.value; 
 
   if (this.editMode()){
     this.updateTraining(this.editingId()!, formData);
@@ -100,10 +108,16 @@ export class AdminComponent {
   }
 }
 
-  private createTraining(data: TrainingFormData){
+  private createTraining(data: any){
     this.isLoading.set(true);
 
-    this.trainingService.createTraining(data).subscribe({
+    const maxId = this.trainings().length > 0 
+      ? Math.max(...this.trainings().map(t => t.id)) 
+      : 0;
+
+    const newTraining = {id: maxId+1, ...data};
+
+    this.trainingService.createTraining(newTraining).subscribe({
       next: () => {
         this.successMsg.set('Formations créee avec succès');
         this.loadTrainings();
@@ -118,7 +132,7 @@ export class AdminComponent {
     })
 }
 
-private updateTraining(id: number, data: TrainingFormData){
+private updateTraining(id: number, data: any){
   this.isLoading.set(true);
 
   this.trainingService.updateTraining(id, data).subscribe({
@@ -138,6 +152,8 @@ private updateTraining(id: number, data: TrainingFormData){
 }
 
 deleteTraining(training: Training){
+  console.log('🗑️ Suppression - Training complet:', training);
+  console.log('🗑️ Type de l\'ID:', typeof training.id, 'Valeur:', training.id);
   if (!confirm(`Etes-vous sur de vouloir supprimer: "${training.name}" ?`)) {
       return;
     }

@@ -1,0 +1,21 @@
+.table th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.75em;
+}
+
+.modal.d-block {
+  display: block !important;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+.card {
+  border: none;
+}
