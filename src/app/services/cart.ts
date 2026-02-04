@@ -19,7 +19,7 @@ export class CartService {
   private readonly auth = inject(AuthService);
 
   //signal privé contenant les articles du panier
-  private readonly _items = signal<CartItem[]>(this.loadFromStorage());
+  private readonly _items = signal<CartItem[]>([]);
   readonly items = this._items.asReadonly();
 
   //calcul du nombre total d'articles dans le panier pour la pastille
@@ -35,12 +35,24 @@ export class CartService {
   constructor(){
     effect(() => {
       const user = this.auth.currentUser();
-      this._items.set(this.loadFromStorageFor(user?.id ?? null));
+      const userId = user?.id ?? null;
+
+      if(userId){
+        const guestItems = this.loadFromStorageFor(null);
+        const userItems = this.loadFromStorageFor(userId);
+        const merged = this.mergeCartItems(guestItems, userItems);
+        
+        this._items.set(merged);
+        localStorage.removeItem(this.storageKeyFor(null));
+        localStorage.setItem(this.storageKeyFor(userId), JSON.stringify(merged));
+      } else{
+        this._items.set(this.loadFromStorageFor(null));
+      }
     });
 
     effect(() => {
-      const user = this.auth.currentUser();
-      const key = this.storageKeyFor(user?.id ?? null);
+      const userId = this.auth.currentUser()?.id ?? null;
+      const key = this.storageKeyFor(userId);
       const items = this._items();
 
       if (items.length > 0) localStorage.setItem(key, JSON.stringify(items));
@@ -64,6 +76,24 @@ export class CartService {
       return [];
     }
   }
+
+  private mergeCartItems(a: CartItem[], b: CartItem[]): CartItem[] {
+    const byTrainingId = new Map<number, CartItem>();
+
+    for (const it of [...a, ...b]) {
+      const id = it?.training?.id;
+      if (id == null) continue;
+
+      const qty = Math.max(1, Number(it.quantity || 1));
+      const existing = byTrainingId.get(id);
+
+      if (!existing) byTrainingId.set(id, { training: it.training, quantity: qty });
+      else byTrainingId.set(id, { training: it.training ?? existing.training, quantity: existing.quantity + qty });
+    }
+
+    return Array.from(byTrainingId.values());
+  }
+  
 
   private getStorageKey(): string{
     const user = this.auth.getCurrentUser();
