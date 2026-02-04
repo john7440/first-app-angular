@@ -96,6 +96,11 @@ export class CheckoutComponent {
    */
   createOrder(customerId: number){
     const currentUser = this.auth.getCurrentUser();
+      if (!currentUser) {
+      this.notAuthenticated.set(true);
+      this.isLoading.set(false);
+      return;
+    }
 
     const orderItems: OrderItem[] = this.cart.items().map( item => ({
       training : item.training,
@@ -106,10 +111,10 @@ export class CheckoutComponent {
 
     const orderData: Omit<Order, 'id'> = {
       customerId,
-      userId: currentUser?.id,
+      userId: currentUser.id,
       items: orderItems,
       totalAmount,
-      status: 'confirmed',
+      status: 'confirmé',
       createdAt: new Date().toISOString()
     };
 
