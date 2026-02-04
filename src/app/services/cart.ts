@@ -33,16 +33,36 @@ export class CartService {
   );
 
   constructor(){
-    effect(()=> {
-      const items = this._items;
-      const key = this.getStorageKey();
-
-      if (items.length > 0){
-        localStorage.setItem(key, JSON.stringify(items))
-      } else{
-        localStorage.removeItem(key);
-      }
+    effect(() => {
+      const user = this.auth.currentUser();
+      this._items.set(this.loadFromStorageFor(user?.id ?? null));
     });
+
+    effect(() => {
+      const user = this.auth.currentUser();
+      const key = this.storageKeyFor(user?.id ?? null);
+      const items = this._items();
+
+      if (items.length > 0) localStorage.setItem(key, JSON.stringify(items));
+      else localStorage.removeItem(key);
+    });
+  }
+
+  private storageKeyFor(userId: number | null): string {
+    return userId ? `cart_user_${userId}` : 'cart_guest';
+  }
+
+  private loadFromStorageFor(userId: number | null): CartItem[] {
+    try {
+      const raw = localStorage.getItem(this.storageKeyFor(userId));
+      if (!raw) return [];
+      const parsed = JSON.parse(raw) as CartItem[];
+      return Array.isArray(parsed)
+        ? parsed.filter(i => i?.training?.id != null && i.quantity > 0)
+        : [];
+    } catch {
+      return [];
+    }
   }
 
   private getStorageKey(): string{
