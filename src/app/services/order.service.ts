@@ -22,4 +22,12 @@ export class OrderService {
     return this.api.create<Order>(this.endpoint, order);
   }
 
+  getOrderByCustomer(customerId: number): Observable<Order[]>{
+    return this.api.getWithParams<Order>(this.endpoint, { customerId });
+  }
+
+  getOrderByUser(userId: number): Observable<Order[]>{
+    return this.api.getWithParams<Order>(this.endpoint, { userId });
+  }
+
 }
