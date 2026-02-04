@@ -10,9 +10,6 @@ export interface CartItem {
   quantity: number;
 }
 
-///clé utilisée pour stocker le panier dans le localstorage 
-const STORAGE_KEY = 'cart-items-store';
-
 /**
  * Service de gestion du panier d'achat
  * Utilise les signals Angular pour la réactivité et synchronise automatiquement avec le localStorage
@@ -56,7 +53,6 @@ export class CartService {
     return 'cart_guest';
   }
 
-
   /**
    * Charge les articles du panier depuis le localStorage
    * Filtre les données invalides pour garantir l'intégrité
@@ -64,7 +60,8 @@ export class CartService {
    */
   private loadFromStorage(): CartItem[] {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
+      const key = this.getStorageKey();
+      const raw = localStorage.getItem(key);
       if (!raw) return [];
       const parsed = JSON.parse(raw) as CartItem[];
       return Array.isArray(parsed) ? parsed.filter(i => i?.training?.id != null && i.quantity > 0) : [];
@@ -132,7 +129,8 @@ export class CartService {
    * Vide complètement le panier et supprime les données du localStorage
    */
   clear() {
+    const key = this.getStorageKey();
     this._items.set([]);
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(key);
   }
 }
