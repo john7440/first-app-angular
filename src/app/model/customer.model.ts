@@ -1,3 +1,5 @@
+import { Training } from "./training/training";
+
 export interface Customer{
     id: number;
     name: string;
@@ -18,10 +20,8 @@ export interface Order{
     createdAt: string;
 }
 
-interface OrderItem {
-    trainingId: number;
-    trainingName: string;
+export interface OrderItem {
+    training: Training;
     quantity: number;
-    price: number;
 
 }

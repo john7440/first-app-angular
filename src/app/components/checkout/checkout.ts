@@ -98,10 +98,8 @@ export class CheckoutComponent {
     const currentUser = this.auth.getCurrentUser();
 
     const orderItems: OrderItem[] = this.cart.items().map( item => ({
-      trainingId: item.id,
-      trainingName: item.name,
-      quantity: item.quantity,
-      price: item.price
+      training : item.training,
+      quantity: item.quantity
     }));
 
     const totalAmount = this.cart.totalPrice();

@@ -70,8 +70,6 @@ export class AdminComponent {
   }
 
   openEditModal(training: Training){
-    console.log('✏️ Édition - Training complet:', training);
-    console.log('✏️ Type de l\'ID:', typeof training.id, 'Valeur:', training.id);
     this.editMode.set(true);
     this.editingId.set(training.id);
 
@@ -152,8 +150,6 @@ private updateTraining(id: number, data: any){
 }
 
 deleteTraining(training: Training){
-  console.log('🗑️ Suppression - Training complet:', training);
-  console.log('🗑️ Type de l\'ID:', typeof training.id, 'Valeur:', training.id);
   if (!confirm(`Etes-vous sur de vouloir supprimer: "${training.name}" ?`)) {
       return;
     }
