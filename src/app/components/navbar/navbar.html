@@ -31,6 +31,15 @@
           (ngModelChange)="search.setTrainingQuery($event)"
         />
 
+        <button class="btn btn-outline-dark btn-sm px-3 py-2"
+                (click)="toggleTheme()" title="{{ theme.theme() === 'light' ? 'Mode sombre' : 'Mode clair' }}">
+                @if (theme.theme() === 'light'){
+                  <i class="bi bi-moon-stars-fill"></i>
+                } @else {
+                  <i class="bi bi-sun-fill"></i>
+                }
+        </button>
+
         <!-- Bouton Connexion/Déconnexion -->
         @if (auth.isAuthenticated()) {
           <div class="dropdown">
