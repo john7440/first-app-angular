@@ -1,5 +1,6 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import type { Training } from '../model/training/training';
+import { AuthService } from './auth.services';
 
 /**
  * Représente un article dans le panier
@@ -18,6 +19,7 @@ const STORAGE_KEY = 'cart-items-store';
  */
 @Injectable({ providedIn: 'root' })
 export class CartService {
+  private readonly auth = inject(AuthService);
 
   //signal privé contenant les articles du panier
   private readonly _items = signal<CartItem[]>(this.loadFromStorage());
@@ -33,11 +35,27 @@ export class CartService {
     this._items().reduce((sum, it) => sum + it.training.price * it.quantity, 0)
   );
 
-  //sync vers localStorage 
-  //note: pas besoin de l'utiliser ailleurs pour que l'effect fonctionne
-  private readonly _sync = effect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this._items()));
-  });
+  constructor(){
+    effect(()=> {
+      const items = this._items;
+      const key = this.getStorageKey();
+
+      if (items.length > 0){
+        localStorage.setItem(key, JSON.stringify(items))
+      } else{
+        localStorage.removeItem(key);
+      }
+    });
+  }
+
+  private getStorageKey(): string{
+    const user = this.auth.getCurrentUser();
+    if (user){
+      return `cart_user_${user.id}`;
+    }
+    return 'cart_guest';
+  }
+
 
   /**
    * Charge les articles du panier depuis le localStorage
