@@ -4,6 +4,7 @@ import { CartService } from '../../services/cart';
 import { FormsModule } from '@angular/forms';
 import { SearchService } from '../../services/search.service';
 import { AuthService } from '../../services/auth.services';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,8 +17,13 @@ export class NavbarComponent {
   readonly cart = inject(CartService);
   readonly search = inject(SearchService);
   readonly auth = inject(AuthService);
+  readonly theme = inject(ThemeService);
 
   logout(): void {
     this.auth.logout();
+  }
+
+  toggleTheme():void{
+    this.theme.toggleTheme();
   }
 }
