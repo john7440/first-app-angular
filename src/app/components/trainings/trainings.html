@@ -8,8 +8,8 @@
     <button
       type="button"
       class="btn btn-sm"
-      [class.btn-dark]="currentCategory() === cat"
-      [class.btn-outline-dark]="currentCategory() !== cat"
+      [class.category-btn-active]="currentCategory() === cat"
+      [class.category-btn-inactive]="currentCategory() !== cat"
       (click)="filter(cat)"
     >
       {{ cat === 'all' ? 'Tous' : cat }}

@@ -1,0 +1,17 @@
+.category-btn-active {
+  background-color: var(--bs-primary);
+  color: white;
+  border-color: var(--bs-primary);
+}
+
+.category-btn-inactive {
+  background-color: transparent;
+  color: var(--bs-body-color);
+  border-color: var(--bs-border-color);
+}
+
+.category-btn-inactive:hover {
+  background-color: var(--bs-primary);
+  color: white;
+  border-color: var(--bs-primary);
+}

@@ -2,3 +2,20 @@
     color: blue;
     transform: scale(1.1); 
 }
+
+.btn-outline-secondary {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+  transform: scale(1.1);
+}
+
+.btn-outline-secondary i {
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-outline-secondary:hover i {
+  transform: rotate(20deg);
+}
