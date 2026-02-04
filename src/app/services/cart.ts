@@ -5,8 +5,11 @@ import type { Training } from '../model/training/training';
  * Représente un article dans le panier
  */
 export interface CartItem {
+  id: number;
   training: Training;
+  name: string;
   quantity: number;
+  price: number;
 }
 
 ///clé utilisée pour stocker le panier dans le localstorage 
