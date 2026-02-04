@@ -63,6 +63,15 @@
       "email": "test123@test.fr",
       "createdAt": "2026-02-04T10:18:43.628Z",
       "id": 1
+    },
+    {
+      "nom": "Test",
+      "prenom": "julien",
+      "adresse": "12 rue du test",
+      "telephone": "0620202020",
+      "email": "test@test.fr",
+      "createdAt": "2026-02-04T10:20:50.030Z",
+      "id": 2
     }
   ],
   "orders": [
@@ -127,9 +136,63 @@
         }
       ],
       "totalAmount": 2585,
-      "status": "confirmed",
+      "status": "confirmé",
       "createdAt": "2026-02-04T10:18:43.673Z",
       "id": 1
+    },
+    {
+      "customerId": 2,
+      "userId": "1",
+      "items": [
+        {
+          "training": {
+            "id": 1,
+            "name": "Formation Angular",
+            "description": "Apprendre Angular de A à Z",
+            "price": 500,
+            "category": "Frontend",
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "id": 2,
+            "name": "Formation React",
+            "description": "Maîtriser React et ses hooks",
+            "price": 450,
+            "category": "Frontend",
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation TypeScript",
+            "description": "TypeScript avancé",
+            "price": 426,
+            "category": "Frontend",
+            "id": 4,
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation Docker",
+            "description": "Conteneurisation avec Docker",
+            "price": 552,
+            "category": "DevOps",
+            "id": 5,
+            "quantity": 1
+          },
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 1928,
+      "status": "confirmé",
+      "createdAt": "2026-02-04T10:20:50.062Z",
+      "id": 2
     }
   ]
 }

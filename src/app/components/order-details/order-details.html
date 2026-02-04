@@ -1,0 +1,47 @@
+
+<ng-container *ngIf="order$ | async as o; else loading">
+  <div class="card position-relative">
+
+    <a
+      routerLink="/orders"
+      class="btn-close position-absolute top-0 end-0 m-2"
+      aria-label="Close">
+    </a>
+
+    <div class="card-body">
+      <div class="d-flex justify-content-between flex-wrap gap-2">
+        <h2 class="h5 mb-0">Commande #{{ o.id }}</h2>
+      </div>
+
+      <div class="mt-2 text-muted">
+        {{ o.createdAt | date:'medium' }} — Total: {{ o.totalAmount }} €
+      </div>
+    </div>
+
+    <div class="table-responsive">
+        <hr>
+      <table class="table mb-0 table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Formation</th>
+            <th class="text-end">Prix</th>
+            <th class="text-end">Qté</th>
+            <th class="text-end">Sous-total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let it of o.items">
+            <td>{{ it.training.name }}</td>
+            <td class="text-end">{{ it.training.price }} €</td>
+            <td class="text-end">{{ it.quantity }}</td>
+            <td class="text-end">{{ it.training.price * it.quantity }} €</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="spinner-border" role="status" aria-hidden="true"></div>
+</ng-template>
