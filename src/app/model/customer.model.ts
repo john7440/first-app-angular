@@ -13,10 +13,10 @@ export interface Customer{
 export interface Order{
     id: number;
     customerId :number;
-    userId?: number;
+    userId: number;
     items: OrderItem[];
     totalAmount: number;
-    status: 'pending' | 'confirmed' | 'cancelled';
+    status: 'En attente' | 'confirmé' | 'Annulé';
     createdAt: string;
 }
 
