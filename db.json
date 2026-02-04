@@ -29,11 +29,11 @@
       "id": 4
     },
     {
-      "id": 5,
       "name": "Formation Docker",
       "description": "Conteneurisation avec Docker",
-      "price": 550,
-      "category": "DevOps"
+      "price": 552,
+      "category": "DevOps",
+      "id": 5
     }
   ],
   "users": [
