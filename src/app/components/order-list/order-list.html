@@ -14,7 +14,7 @@
           <th>Statut</th>
           <th class="text-end">Total</th>
           <th></th>
-        </tr>
+        </tr>t
       </thead>
 
       <tbody>
@@ -25,9 +25,9 @@
             <span
               class="badge"
               [ngClass]="{
-                'bg-warning text-dark': o.status === 'pending',
-                'bg-success': o.status === 'confirmed',
-                'bg-danger': o.status === 'cancelled'
+                'bg-warning text-dark': o.status === 'En attente',
+                'bg-success': o.status === 'confirmé',
+                'bg-danger': o.status === 'Annulé'
               }"
             >
               {{ o.status }}
