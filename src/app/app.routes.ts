@@ -6,12 +6,16 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginComponent } from './components/login/login';
 import { AdminComponent } from './components/admin/admin';
 import { adminGuard } from './guards/admin-guard';
+import { OrderListComponent } from './components/order-list/order-list';
+import { OrderDetailsComponent } from './components/order-details/order-details';
 
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'trainings' },
   { path: 'trainings', component: TrainingsComponent },
   { path: 'login', component: LoginComponent},
+  { path: 'orders', component: OrderListComponent},
+  { path: 'orders/:id', component: OrderDetailsComponent },
   { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
