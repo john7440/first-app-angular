@@ -47,7 +47,7 @@ export class AuthService {
 
   logout(): void {
     this.currentUser.set(null);
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(this.STORAGE_KEY);
     this.router.navigate(['/trainings'])
   }
 
@@ -61,7 +61,7 @@ export class AuthService {
     this.currentUser.set(userToStore);
   }
 
-  getCurrentUser(): User | null {
+  getCurrentUser(): User | null{
      return this.currentUser();
   }
 
@@ -78,7 +78,7 @@ export class AuthService {
         if (decryptedData) {
           this.currentUser.set(decryptedData);
         } else{
-          localStorage.removeItem(decryptedData);
+          localStorage.removeItem(this.STORAGE_KEY);
         }
        }catch (error){
         console.error("Erreur dechiffrement: ", error);
