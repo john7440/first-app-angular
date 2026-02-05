@@ -13,6 +13,7 @@ import { Order } from '../../model/customer.model';
   standalone: true,
   imports: [CommonModule, RouterLink, DatePipe],
   templateUrl: './order-details.html',
+  styleUrl: './order-details.css',
 })
 
 export class OrderDetailsComponent{

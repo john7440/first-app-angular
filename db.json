@@ -102,6 +102,15 @@
       "email": "test@test.fr",
       "createdAt": "2026-02-05T08:19:51.959Z",
       "id": 3
+    },
+    {
+      "nom": "Sarhane",
+      "prenom": "Théo",
+      "adresse": "3 rue de la pierre en bois",
+      "telephone": "0621236515",
+      "email": "test@test.fr",
+      "createdAt": "2026-02-05T09:38:05.850Z",
+      "id": 4
     }
   ],
   "orders": [
@@ -244,6 +253,27 @@
       "status": "confirmé",
       "createdAt": "2026-02-05T08:19:51.997Z",
       "id": 3
+    },
+    {
+      "customerId": 4,
+      "userId": 1,
+      "items": [
+        {
+          "training": {
+            "name": "Formation Angular",
+            "description": "Apprendre Angular de A à Z ",
+            "price": 2526,
+            "category": "Frontend",
+            "id": 1,
+            "quantity": 1
+          },
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 2526,
+      "status": "confirmé",
+      "createdAt": "2026-02-05T09:38:05.867Z",
+      "id": 4
     }
   ]
 }

@@ -1,0 +1,5 @@
+.table-responsive {
+  min-height: 20vh;
+  position: relative;
+  margin-bottom: 100px;
+}
