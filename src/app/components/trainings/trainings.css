@@ -15,3 +15,10 @@
   color: white;
   border-color: var(--bs-primary);
 }
+
+.container {
+  min-height: 50vh;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
