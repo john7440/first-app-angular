@@ -13,6 +13,7 @@ import { AuthService } from '../../services/auth.services';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './order-list.html',
+  styleUrl: './order-list.css',
 })
 
 export class OrderListComponent{
