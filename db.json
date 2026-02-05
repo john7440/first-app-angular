@@ -1,18 +1,18 @@
 {
   "trainings": [
     {
-      "id": 1,
       "name": "Formation Angular",
-      "description": "Apprendre Angular de A à Z",
-      "price": 500,
-      "category": "Frontend"
+      "description": "Apprendre Angular de A à Z ",
+      "price": 2526,
+      "category": "Frontend",
+      "id": 1
     },
     {
-      "id": 2,
       "name": "Formation React",
-      "description": "Maîtriser React et ses hooks",
-      "price": 450,
-      "category": "Frontend"
+      "description": "Maitriser React et ses hooks",
+      "price": 1450,
+      "category": "Frontend",
+      "id": 2
     },
     {
       "id": 3,
@@ -34,6 +34,13 @@
       "price": 552,
       "category": "DevOps",
       "id": 5
+    },
+    {
+      "name": "Android Studio",
+      "description": "Apprenez a faire des appli mobiles comme Candy Crush!",
+      "price": 3952,
+      "category": "Mobile",
+      "id": 6
     }
   ],
   "users": [
