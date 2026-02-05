@@ -36,11 +36,25 @@
       "id": 5
     },
     {
-      "name": "Android Studio",
+      "name": "Formation Android Studio",
       "description": "Apprenez a faire des appli mobiles comme Candy Crush!",
       "price": 3952,
       "category": "Mobile",
       "id": 6
+    },
+    {
+      "name": "Formation MySQL",
+      "description": "Apprenez a faire des petites tables (avec des petites chaises)",
+      "price": 999,
+      "category": "Database",
+      "id": 7
+    },
+    {
+      "id": 8,
+      "name": "Formation Django",
+      "description": "Apprenez des trucs avec Django !",
+      "price": 499,
+      "category": "Backend"
     }
   ],
   "users": [
@@ -79,6 +93,15 @@
       "email": "test@test.fr",
       "createdAt": "2026-02-04T10:20:50.030Z",
       "id": 2
+    },
+    {
+      "nom": "Sarhane",
+      "prenom": "Théo",
+      "adresse": "3 rue de la pierre en bois",
+      "telephone": "0621236515",
+      "email": "test@test.fr",
+      "createdAt": "2026-02-05T08:19:51.959Z",
+      "id": 3
     }
   ],
   "orders": [
@@ -200,6 +223,27 @@
       "status": "confirmé",
       "createdAt": "2026-02-04T10:20:50.062Z",
       "id": 2
+    },
+    {
+      "customerId": 3,
+      "userId": 2,
+      "items": [
+        {
+          "training": {
+            "id": 1,
+            "name": "Formation Angular",
+            "description": "Apprendre Angular de A à Z",
+            "price": 500,
+            "category": "Frontend",
+            "quantity": 1
+          },
+          "quantity": 3
+        }
+      ],
+      "totalAmount": 1500,
+      "status": "confirmé",
+      "createdAt": "2026-02-05T08:19:51.997Z",
+      "id": 3
     }
   ]
 }
