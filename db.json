@@ -166,6 +166,15 @@
       "email": "test123@test.fr",
       "createdAt": "2026-02-09T14:02:43.874Z",
       "id": 5
+    },
+    {
+      "nom": "Bidule",
+      "prenom": "Machin",
+      "adresse": "12 avenue de la pierre en bois",
+      "telephone": "0625212020",
+      "email": "test345@test.fr",
+      "createdAt": "2026-02-09T14:35:43.479Z",
+      "id": 6
     }
   ],
   "orders": [
@@ -383,6 +392,49 @@
       "status": "confirmé",
       "createdAt": "2026-02-09T14:02:43.906Z",
       "id": 5
+    },
+    {
+      "customerId": 6,
+      "userId": 4,
+      "items": [
+        {
+          "training": {
+            "name": "Formation React",
+            "description": "Maitriser React et ses hooks",
+            "price": 1450,
+            "category": "Frontend",
+            "id": 2,
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "id": 3,
+            "name": "Formation Node.js",
+            "description": "Backend avec Node.js et Express",
+            "price": 657,
+            "category": "Backend",
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation MySQL",
+            "description": "Apprenez a faire des petites tables (avec des petites chaises)",
+            "price": 999,
+            "category": "Database",
+            "id": 7,
+            "quantity": 1
+          },
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 3106,
+      "status": "confirmé",
+      "createdAt": "2026-02-09T14:35:43.513Z",
+      "id": 6
     }
   ]
 }
