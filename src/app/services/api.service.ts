@@ -41,8 +41,8 @@ export class ApiService {
     );
   }
 
-  delete<T>(endpoint: string, id: number): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}/${endpoint}/${id}`).pipe(
+  delete(endpoint: string, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${endpoint}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
