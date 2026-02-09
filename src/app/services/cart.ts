@@ -33,6 +33,12 @@ export class CartService {
   );
 
   constructor(){
+    /**
+     * Effect 1 : Gestion du panier lors du changement d'utilisateur (login/logout)
+     * Se déclenche automatiquement quand currentUser change
+     * - Si login : fusionne le panier invité avec le panier utilisateur et migre vers la clé user
+     * - Si logout : charge le panier invité
+     */
     effect(() => {
       const user = this.auth.currentUser();
       const userId = user?.id ?? null;
@@ -50,6 +56,11 @@ export class CartService {
       }
     });
 
+    /**
+     * Effect 2 : Persistance automatique du panier dans le localStorage
+     * Se déclenche à chaque modification du panier
+     * Sauvegarde dans la clé appropriée (invité ou utilisateur)
+     */
     effect(() => {
       const userId = this.auth.currentUser()?.id ?? null;
       const key = this.storageKeyFor(userId);
@@ -60,10 +71,21 @@ export class CartService {
     });
   }
 
+
+  /**
+   * genere la clé de stockage appropriée selon le statut de l'utilisateur
+   * @param userId - id de l'utilisateurou null pour un invité
+   * @returns la clé localStorage 
+   */
   private storageKeyFor(userId: number | null): string {
     return userId ? `cart_user_${userId}` : 'cart_guest';
   }
 
+  /**
+   *charge le panier depuis le localStorage pour un utilisateur donné
+   * @param userId - Id de l'utilisateur ou null pour invité
+   * @returns tableau des articles du panier ou un tableau vide
+   */
   private loadFromStorageFor(userId: number | null): CartItem[] {
     try {
       const raw = localStorage.getItem(this.storageKeyFor(userId));
@@ -77,6 +99,12 @@ export class CartService {
     }
   }
 
+   /**
+   *fusionne deux paniers en additionnant les quantités des articles identiques
+   * @param a - le 1er panier
+   * @param b - 2ème panier
+   * @returns articles fusionnés sans doublons
+   */
   private mergeCartItems(a: CartItem[], b: CartItem[]): CartItem[] {
     const byTrainingId = new Map<number, CartItem>();
 
@@ -104,26 +132,9 @@ export class CartService {
   }
 
   /**
-   * Charge les articles du panier depuis le localStorage
-   * Filtre les données invalides pour garantir l'intégrité
-   * @returns Tableau des articles du panier ou tableau vide en cas d'erreur
-   */
-  private loadFromStorage(): CartItem[] {
-    try {
-      const key = this.getStorageKey();
-      const raw = localStorage.getItem(key);
-      if (!raw) return [];
-      const parsed = JSON.parse(raw) as CartItem[];
-      return Array.isArray(parsed) ? parsed.filter(i => i?.training?.id != null && i.quantity > 0) : [];
-    } catch {
-      return [];
-    }
-  }
-
-  /**
    * Ajoute une formation au panier ou augmente sa quantité si elle existe déjà
    * @param training Formation à ajouter
-   * @param quantity Quantité à ajouter (minimum 1)
+   * @param quantity Quantité à ajouter (min 1)
    */
   add(training: Training, quantity: number) {
     const qty = Math.max(1, Number(quantity || 1));
