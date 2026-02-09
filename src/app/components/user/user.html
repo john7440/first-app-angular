@@ -1,0 +1,231 @@
+<div class="container mt-4 mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-gear me-2"></i>Administration des Users</h2>
+    <button class="btn btn-primary" (click)="openAddModal()">
+      <i class="bi bi-plus-circle me-2"></i>
+      Ajouter un User
+    </button>
+  </div>
+
+  <!-- messages -->
+  @if (successMsg()) {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="bi bi-check-circle me-2"></i>
+      {{ successMsg() }}
+      <button type="button" class="btn-close" (click)="successMsg.set(null)"></button>
+    </div>
+  }
+
+  @if (errorMsg()) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle me-2"></i>
+      {{ errorMsg() }}
+      <button type="button" class="btn-close" (click)="errorMsg.set(null)"></button>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="text-center my-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+    </div>
+  }
+
+  <!-- users-->
+  @if (!isLoading()) {
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Role</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users(); track user.id) {
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td><strong>{{ user.email }}</strong></td>
+                  <td>{{ user.firstName }}</td>
+                  <td>{{ user.lastName }}</td>
+                  <td>
+                    <span class="badge bg-secondary">{{ user.role }}</span>
+                  </td>
+                  <td class="text-end">
+                    <button 
+                      class="btn btn-sm btn-outline-primary me-2" 
+                      (click)="openEditModal(user)"
+                      title="Modifier">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button 
+                      class="btn btn-sm btn-outline-danger" 
+                      [disabled]="user.id === 1"
+                      (click)="deleteUser(user)"
+                      title="Supprimer">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="6" class="text-center text-muted py-4">
+                    Aucun utilisateur enregistré
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+<!--formulaire -->
+@if (showModal()) {
+  <div class="modal d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            @if (editMode()) {
+              <i class="bi bi-pencil me-2"></i>Modifier l'utilisteur
+            } @else {
+              <i class="bi bi-plus-circle me-2"></i>Ajouter un utilisateur
+            }
+          </h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="modal-body">
+            <!-- email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email *</label>
+              <input
+                type="text"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                [class.is-invalid]="email?.invalid && email?.touched"
+              />
+              @if (email?.invalid && email?.touched) {
+                <div class="invalid-feedback">
+                  @if (email?.errors?.['required']) {
+                    Le nom est requis
+                  }
+                  @if (email?.errors?.['minlength']) {
+                    3 caracteres min
+                  }
+                </div>
+              }
+            </div>
+
+            <!--password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password *</label>
+              <textarea
+                class="form-control"
+                id="password"
+                formControlName="password"
+                [class.is-invalid]="password?.invalid && password?.touched"
+              ></textarea>
+              @if (password?.invalid && password?.touched) {
+                <div class="invalid-feedback">
+                  @if (password?.errors?.['required']) {
+                    Password requis
+                  }
+                  @if (password?.errors?.['minlength']) {
+                    4 caracteres min
+                  }
+                </div>
+              }
+            </div>
+
+            <!-- prénom-->
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <label for="firstName" class="form-label">Prénom*</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  formControlName="firstName"
+                  [class.is-invalid]="firstName?.invalid && firstName?.touched"
+                />
+                @if (firstName?.invalid && firstName?.touched) {
+                  <div class="invalid-feedback">
+                    @if (firstName?.errors?.['min']) {
+                      3 caractères minimum
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!--Nom---->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Nom *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  formControlName="lastName"
+                  [class.is-invalid]="lastName?.invalid && lastName?.touched"
+                />
+                @if (lastName?.invalid && lastName?.touched) {
+                  <div class="invalid-feedback">
+                    @if (lastName?.errors?.['min']) {
+                      3 caractères minimum!
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-5 p-3">
+                <label for="role" class="form-label">Role *</label>
+                <select
+                  class="form-select"
+                  id="role"
+                  formControlName="role"
+                  [class.is-invalid]="role?.invalid && role?.touched"
+                >
+                  <option value="">-- Choisir --</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">Utilisateur</option>
+                </select>
+                @if (role?.invalid && role?.touched) {
+                  <div class="invalid-feedback">
+                    Le role est requis
+                  </div>
+                }
+              </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+              @if (editMode()) {
+                <i class="bi bi-save me-2"></i>Mettre à jour
+              } @else {
+                <i class="bi bi-plus-circle me-2"></i>Créer
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
