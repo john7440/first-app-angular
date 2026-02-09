@@ -38,9 +38,7 @@ export class TrainingService {
   }
 
   deleteTraining(id: number): Observable<void>{
-    return this.api.delete<TrainingFromJson>(this.endpoint, id).pipe(
-      map(() => void 0)
-    );
+    return this.api.delete(this.endpoint, id);
   }
 
   private mapToTraining(trainingFromJson: TrainingFromJson): Training {
