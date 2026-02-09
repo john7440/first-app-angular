@@ -56,7 +56,7 @@ export class TrainingsComponent {
    */
   readonly categories = computed(() => {
     const cats = new Set(this.allTrainings().map(t => t.category));
-    return ['all', ...Array.from(cats).sort()];
+    return ['all', ...Array.from(cats).sort((a, b) => a.localeCompare(b))];
   });
 
   /**
