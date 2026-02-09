@@ -8,6 +8,7 @@ import { AdminComponent } from './components/admin/admin';
 import { adminGuard } from './guards/admin-guard';
 import { OrderListComponent } from './components/order-list/order-list';
 import { OrderDetailsComponent } from './components/order-details/order-details';
+import { UserComponent } from './components/user/user';
 
 
 export const routes: Routes = [
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'orders', component: OrderListComponent},
   { path: 'orders/:id', component: OrderDetailsComponent },
   { path: 'admin', component: AdminComponent, canActivate: [adminGuard]},
+  { path: 'users', component: UserComponent, canActivate: [adminGuard]},
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: '**', component: PageNotFoundComponent }, 
