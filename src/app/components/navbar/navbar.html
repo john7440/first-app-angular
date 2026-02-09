@@ -56,6 +56,9 @@
               @if (auth.getCurrentUser() && auth.isAdmin(auth.getCurrentUser()!)) {
                 <li><a class="dropdown-item" routerLink="/admin"><i class="bi bi-gear me-2"></i>Administration</a></li>
               }
+              @if (auth.getCurrentUser() && auth.isAdmin(auth.getCurrentUser()!)) {
+                <li><a class="dropdown-item" routerLink="/users"><i class="bi bi-gear me-2"></i>Gestion utilisateurs</a></li>
+              }
               <li><hr class="dropdown-divider"></li>
               <li><button class="dropdown-item text-danger" type="button" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Déconnexion</button></li>
             </ul>
