@@ -157,6 +157,15 @@
       "email": "test@test.fr",
       "createdAt": "2026-02-05T09:38:05.850Z",
       "id": 4
+    },
+    {
+      "nom": "Machin",
+      "prenom": "blabla",
+      "adresse": "12 rue des abonnées absents",
+      "telephone": "0620202020",
+      "email": "test123@test.fr",
+      "createdAt": "2026-02-09T14:02:43.874Z",
+      "id": 5
     }
   ],
   "orders": [
@@ -320,6 +329,60 @@
       "status": "confirmé",
       "createdAt": "2026-02-05T09:38:05.867Z",
       "id": 4
+    },
+    {
+      "customerId": 5,
+      "userId": 4,
+      "items": [
+        {
+          "training": {
+            "id": 3,
+            "name": "Formation Node.js",
+            "description": "Backend avec Node.js et Express",
+            "price": 657,
+            "category": "Backend",
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation TypeScript",
+            "description": "TypeScript avancé",
+            "price": 426,
+            "category": "Frontend",
+            "id": 4,
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation Android Studio",
+            "description": "Apprenez a faire des appli mobiles comme Candy Crush!",
+            "price": 3952,
+            "category": "Mobile",
+            "id": 6,
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation MySQL",
+            "description": "Apprenez a faire des petites tables (avec des petites chaises)",
+            "price": 999,
+            "category": "Database",
+            "id": 7,
+            "quantity": 1
+          },
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 6034,
+      "status": "confirmé",
+      "createdAt": "2026-02-09T14:02:43.906Z",
+      "id": 5
     }
   ]
 }
