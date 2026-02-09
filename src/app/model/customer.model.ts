@@ -10,6 +10,16 @@ export interface Customer{
     createdAt?: string;
 }
 
+export interface User{
+    id: number;
+    email: string;
+    password: string;
+    role : 'admin'|'user';
+    firstName?: string;
+    lastName?: string;
+
+}
+
 export interface Order{
     id: number;
     customerId :number;
