@@ -59,12 +59,12 @@
   ],
   "users": [
     {
-      "id": 1,
       "email": "admin@example.com",
       "password": "admin123",
+      "firstName": "Tonald",
+      "lastName": "Drump",
       "role": "admin",
-      "firstName": "Admin",
-      "lastName": "User"
+      "id": 1
     },
     {
       "id": 2,
@@ -73,6 +73,52 @@
       "role": "user",
       "firstName": "John",
       "lastName": "Doe"
+    },
+    {
+      "id": 3,
+      "email": "test123@test.fr",
+      "password": "test123",
+      "firstName": "Truc",
+      "lastName": "Machin",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "email": "machin@bidule.com",
+      "password": "bidule123",
+      "firstName": "Machin",
+      "lastName": "Bidule",
+      "role": "user"
+    },
+    {
+      "id": 5,
+      "email": "bonhomme.en.mousse@skyblog.fr",
+      "password": "mousse123",
+      "firstName": "Petit Bonhomme",
+      "lastName": "En Mousse",
+      "role": "user"
+    },
+    {
+      "email": "testregister@skyblog.fr",
+      "password": "user123",
+      "role": "user",
+      "id": 6
+    },
+    {
+      "email": "bubulle@fish.com",
+      "password": "bubulle",
+      "role": "user",
+      "firstName": "Bubulle",
+      "lastName": "LePoisson",
+      "id": 7
+    },
+    {
+      "email": "test345@test.fr",
+      "password": "test345",
+      "role": "user",
+      "firstName": "test",
+      "lastName": "Passé avec succes!",
+      "id": 8
     }
   ],
   "customers": [
