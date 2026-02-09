@@ -15,7 +15,7 @@ export class CustomerService {
         return this.api.getAll<Customer>(this.endpoint);
     }
 
-    getCustomerBytId(id: number): Observable<Customer>{
+    getCustomerById(id: number): Observable<Customer>{
         return this.api.getById<Customer>(this.endpoint, id);
     }
 
@@ -28,7 +28,7 @@ export class CustomerService {
     }
 
     deleteCustomer(id: number): Observable<void>{
-        return this.api.delete<Customer>(this.endpoint, id).pipe(map(()=> void 0));
+        return this.api.delete(this.endpoint, id);
     }
 
 }
