@@ -1,14 +1,14 @@
 <div class="container mt-3">
-  <h4 class="mb-3 text-center"> Votre Panier</h4>
+  <h4 class="p-3 text-center"> Votre Panier</h4>
   <input
-    class="form-control mb-3"
+    class="form-control mb-4"
     placeholder="Rechercher dans le panier..."
     [ngModel]="cartQuery()"
     (ngModelChange)="cartQuery.set($event)"
     name="cart-search"
   />
 
-  <table class="table table-striped align-middle" style="table-layout: fixed; width: 100%;">
+  <table class="table table-striped align-middle table-hover" style="table-layout: fixed; width: 100%;">
     <thead>
       <tr>
         <th style="width: 220px;">Formation</th>
