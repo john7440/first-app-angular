@@ -35,7 +35,6 @@ export class AuthService {
                 throw new Error('Email ou mdp incorrect!');
             }
             const user = users[0];
-            const guestCart = localStorage.getItem('cart_guest');
 
             this.setCurrentUser(user); 
             return user;
