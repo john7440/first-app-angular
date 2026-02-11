@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -22,7 +22,7 @@ type TrainingFromJson = Omit<Training, 'quantity'>;
   styleUrl: './trainings.css',
 })
 //-------------------------------------------------------
-export class TrainingsComponent {
+export class TrainingsComponent implements OnInit {
   //injection des services
   private readonly cart = inject(CartService);
   private readonly trainingService = inject(TrainingService);
