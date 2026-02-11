@@ -1,7 +1,7 @@
 {
   "trainings": [
     {
-      "name": "Formation Angular",
+      "name": "Formation Angular1",
       "description": "Apprendre Angular de A à Z ",
       "price": 2526,
       "category": "Frontend",
@@ -175,6 +175,15 @@
       "email": "test345@test.fr",
       "createdAt": "2026-02-09T14:35:43.479Z",
       "id": 6
+    },
+    {
+      "nom": "LePoisson",
+      "prenom": "Bubulle",
+      "adresse": "12 avenue de la pierre en bois",
+      "telephone": "0625212020",
+      "email": "bubulle@fish.com",
+      "createdAt": "2026-02-10T10:16:49.869Z",
+      "id": 7
     }
   ],
   "orders": [
@@ -435,6 +444,71 @@
       "status": "confirmé",
       "createdAt": "2026-02-09T14:35:43.513Z",
       "id": 6
+    },
+    {
+      "customerId": 7,
+      "userId": 1,
+      "items": [
+        {
+          "training": {
+            "id": 3,
+            "name": "Formation Node.js",
+            "description": "Backend avec Node.js et Express",
+            "price": 657,
+            "category": "Backend",
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation TypeScript",
+            "description": "TypeScript avancé",
+            "price": 426,
+            "category": "Frontend",
+            "id": 4,
+            "quantity": 1
+          },
+          "quantity": 1
+        },
+        {
+          "training": {
+            "name": "Formation Android Studio",
+            "description": "Apprenez a faire des appli mobiles comme Candy Crush!",
+            "price": 3952,
+            "category": "Mobile",
+            "id": 6,
+            "quantity": 1
+          },
+          "quantity": 40
+        },
+        {
+          "training": {
+            "name": "Formation MySQL",
+            "description": "Apprenez a faire des petites tables (avec des petites chaises)",
+            "price": 999,
+            "category": "Database",
+            "id": 7,
+            "quantity": 99
+          },
+          "quantity": 100
+        },
+        {
+          "training": {
+            "id": 8,
+            "name": "Formation Django",
+            "description": "Apprenez des trucs avec Django !",
+            "price": 499,
+            "category": "Backend",
+            "quantity": 1
+          },
+          "quantity": 1
+        }
+      ],
+      "totalAmount": 259562,
+      "status": "confirmé",
+      "createdAt": "2026-02-10T10:16:49.906Z",
+      "id": 7
     }
   ]
 }
